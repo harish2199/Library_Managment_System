@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library_Management_System
+namespace Library_Managment_App
 {
     public interface ILogin
     {
-        bool LoginUser();
+        bool LoginUser(string username, string password);
     }
 }

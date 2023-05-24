@@ -1,25 +1,27 @@
-﻿using Library_Management_System;
-using System.Data.SqlClient;
-using Spectre.Console;
-using System.Diagnostics;
+﻿using Spectre.Console;
 
-namespace Library_Management_System
+namespace Library_Managment_App
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            AnsiConsole.Write(new FigletText("Library Management System").Centered().Color(Color.Red));
-
             Login login = new Login();
             Students students = new Students();
             Books books = new Books();
-            bool Is_Logged_In = login.LoginUser();
+            AnsiConsole.Write(new FigletText("Library Management System").Centered().Color(Color.DeepSkyBlue2));
+
+            AnsiConsole.MarkupLine("[CornflowerBlue]Please Login to continue:[/]");
+            Console.WriteLine();
+
+            bool Is_Logged_In = false;
             while (!Is_Logged_In)
             {
-                Is_Logged_In =login.LoginUser();
+                string username = AnsiConsole.Ask<string>("[yellow]Enter User Name:[/]");
+                string password = AnsiConsole.Ask<string>("[yellow]Enter Password:[/]");
+                Is_Logged_In = login.LoginUser(username, password);
             }
-            //Console.WriteLine(Is_Logge_In);
+
             Console.WriteLine();
             var rule = new Rule("[green]WELCOME TO LIBRARY MANAGMENT SYSTEM[/]");
             rule.Style = Style.Parse("red dim");
@@ -31,18 +33,18 @@ namespace Library_Management_System
                     .Title("[green]Select your choice :[/]")
                     .AddChoices(new[] {
                         "Add Student",
-                        "Update Student By ID",
-                        "Delete Student By ID",
-                        "Search Student By ID",
-                        "Students_Having_Books",
+                        "Update Student",
+                        "Delete Student",
+                        "View Student",
                         "View All Students",
+                        "Students Having Books",
                         "Add Book",
-                        "Update Book By ID",
-                        "Delete Book By ID",
-                        "View All Books",
-                        "View Books By Author",
+                        "Update Book",
+                        "Delete Book",
                         "Issue Book",
-                        "Return Book"
+                        "Return Book",
+                        "View All Books",
+                        "View Books By Author"
                    }));
 
                 switch (choice)
@@ -52,27 +54,27 @@ namespace Library_Management_System
                             students.Add_Student();
                             break;
                         }
-                    case "Update Student By ID":
+                    case "Update Student":
                         {
-                            students.update_Student_By_ID();
+                            students.update_Student();
                             break;
                         }
-                    case "Delete Student By ID":
+                    case "Delete Student":
                         {
-                            students.Delete_Student_By_ID();
+                            students.Delete_Student();
                             break;
                         }
                     case "View All Students":
                         {
-                            students.View_All_Students(); 
+                            students.View_Students();
                             break;
                         }
-                    case "Search Student By ID":
+                    case "View Student":
                         {
-                            students.Search_Student_Based_On_Student_ID();
+                            students.View_Student();
                             break;
                         }
-                    case "Students_Having_Books":
+                    case "Students Having Books":
                         {
                             students.Students_Havinng_Books();
                             break;
@@ -82,19 +84,19 @@ namespace Library_Management_System
                             books.Add_Book();
                             break;
                         }
-                    case "Update Book By ID":
+                    case "Update Book":
                         {
-                            books.update_Book_By_ID();
+                            books.Update_Book();
                             break;
                         }
-                    case "Delete Book By ID":
+                    case "Delete Book":
                         {
-                            books.Delete_Book_By_ID();
+                            books.Delete_Book();
                             break;
                         }
                     case "View All Books":
                         {
-                            books.View_All_Boooks(); 
+                            books.View_All_Boooks();
                             break;
                         }
                     case "View Books By Author":
@@ -114,7 +116,7 @@ namespace Library_Management_System
                         }
                 }
             }
+
         }
     }
 }
-
